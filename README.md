@@ -1,59 +1,68 @@
-# TickerTape 📉
+# TickerTape 2.0
 
-![iOS](https://img.shields.io/badge/iOS-16.0%2B-black?logo=apple&logoColor=white)
-![Swift](https://img.shields.io/badge/Swift-5.9-orange?logo=swift&logoColor=white)
-![Architecture](https://img.shields.io/badge/Architecture-MVVM-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
+[![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg?style=flat)]()
+[![Platform](https://img.shields.io/badge/Platform-iOS%2017.0+-blue.svg?style=flat)]()
+[![SwiftUI](https://img.shields.io/badge/SwiftUI-Framework-teal.svg?style=flat)]()
+[![AppStore](https://img.shields.io/badge/App_Store-v2.0.0-black.svg?style=flat)]()
 
-**TickerTape** is a high-performance, retro-styled currency converter for iOS. Inspired by the aesthetics of 80s LED tickers and the *Matrix*, it provides real-time conversion between 160+ fiat currencies and major cryptocurrencies.
+**TickerTape** is a premium, minimalist iOS currency converter. Its interface design is inspired by the nostalgic, industrial aesthetics of **mechanical split-flap (Solari) boards** traditionally found in classic European train stations and airports, transforming a daily utility into a unique visual and tactile experience.
 
-Built with **SwiftUI** and **Swift Concurrency**, TickerTape features a robust offline mode, a gamified ad-removal system, and seamless integration with StoreKit 2.
+Version **2.0.0** introduces a total redesign of the graphic interface and user interaction model, adopting an elegant look in warm dark tones with comprehensive native support for both Light and Dark Modes.
 
 ---
 
-## 📱 Screenshots
+## Screenshots
 
-| Main Converter | Add Currency | Settings & Pro |
+| Main Converter | Add Currency | Calculator |
 |:---:|:---:|:---:|
-| <img src="images/Simulator Screenshot - iPhone 17 Pro Max - 2026-02-09 at 12.58.40.png" width="250" alt="Main View with Matrix Background" /> | <img src="images/Simulator Screenshot - iPhone 17 Pro Max - 2026-02-09 at 12.58.50.png" width="250" alt="Search and Add Currency" /> | <img src="images/Simulator Screenshot - iPhone 17 Pro Max - 2026-02-09 at 12.59.08.png" width="250" alt="Settings and StoreKit" /> |
-| *Real-time conversion with LED aesthetic* | *Search 160+ currencies & Crypto* | *Gamified Ad-Removal & IAP* |
+| <img src="images/1.png" width="250" alt="Main View" /> | <img src="images/2.png" width="250" alt="Search and Add Currency" /> | <img src="images/4.png" width="250" alt="Calculator" /> |
 
 ---
 
-## ✨ Key Features
+## Main Features
 
-* **Hybrid Data Engine:** Seamlessly merges data from `ExchangeRate-API` (Fiat) and `CryptoCompare` (Crypto) into a single unified list.
-* **Retro UI/UX:** Custom "Matrix" background implementation, `VT323` retro typography, and haptic feedback for a tactile feel.
-* **Smart Persistence:** Uses `UserDefaults` to cache rates, allowing full functionality in **Offline Mode**.
-* **Interactive List:** Drag-and-drop reordering and swipe-to-delete gestures.
-* **Custom Input System:** A bespoke numeric keypad tailored for currency input, handling decimal logic dynamically based on the currency type (e.g., JPY vs USD).
-* **Gamified Monetization:**
-    * **StoreKit 2:** Lifetime Pro unlock.
-    * **Rewarded Ads:** Users can "bypass the firewall" by watching ads to earn ad-free time (1 ad = 2 hours; 5 ads streak = 24 hours).
-* **Localization:** Fully localized in English, Spanish, German, French, Italian, and Portuguese.
+### 1. Interactive Solari Split-Flap Board
+* **Realistic Physics and Sounds**: The card segments flip with simulated 3D physics and trigger sequential mechanical clicking sounds as values change, faithfully recreating the feel of vintage flap boards.
+* **Industrial Grotesque Typography**: Built using the **`DINAlternate-Bold`** typeface stretched vertically (`.scaleEffect(y: 1.15)`) for extreme legibility and a retro-industrial aesthetic.
 
----
+### 2. Symmetrical Card Layout
+* The digit card slots of all currency rows maintain a fixed, symmetrical width of exactly 10 slots.
+* The currency symbol cards are displayed statically on the right side, left-aligned inside exactly 3 card slots.
 
-## 🛠 Tech Stack
+### 3. Interactive Long Number Viewer (Hotfix v2.0.1)
+* If a conversion value exceeds 10 digits, the 10th card displays a retro truncation indicator (`>`).
+* A mint green info icon **`(i)`** will automatically appear next to the currency code.
+* Tapping this icon triggers a haptic impact and presents a native alert containing the **complete un-truncated number with all decimals**, along with a direct action to copy it to the clipboard.
 
-### UI & Architecture
-* **SwiftUI:** 100% declarative UI. Complex layouts using `ZStack`, `GeometryReader` (for the scrolling ticker effect), and custom transitions.
-* **MVVM (Model-View-ViewModel):** Strict separation of logic. Views observe `CurrencyViewModel` via the `Combine` framework.
-* **Combine:** Used for reactive state management (`@Published` properties, `ObservableObject`).
+### 4. Dynamic Theme Engine (Light & Dark Modes)
+* The application automatically adapts to your system theme, or allows manually selecting Light or Dark mode.
+* In **Light Mode**, the Solari card flaps adopt a subtle off-white shade with dark charcoal text, creating a beautiful contrast on clean backgrounds.
 
-### Networking & Data
-* **Swift Concurrency:** Heavy use of `async/await` for parallel data fetching (`TaskGroup` or `async let`).
-* **URLSession:** Native networking layer without third-party wrappers.
-* **Codable:** Type-safe JSON parsing for API responses.
+### 5. Native iOS Gestures & Smooth Transition
+* Migrated the listing mechanism to a native SwiftUI `List` container.
+* Native support for dragging rows to reorder lists and swiping to delete items (*swipe-to-delete*).
+* Card modules automatically hide with a scale and opacity animation when entering edit mode, ensuring rows never expand vertically or squeeze.
 
-### Monetization & Tools
-* **Google Mobile Ads SDK:** Integration of Banner and Interstitial/Rewarded ads.
-* **StoreKit 2:** Modern Swift implementation for In-App Purchases and entitlement verification.
-* **UIKit Integration:** `UIViewRepresentable` used to bridge Google AdMob views into SwiftUI.
+### 6. Smart Ad Placements & StoreKit Store
+* **Interleaved Ad Banner**: The advertisement banner automatically anchors at position 6 (index 5) for lists with 5 or more items, and is completely hidden during edit mode to prevent any reordering layout interruptions.
+* **Dynamic Pricing**: Fully integrated with **StoreKit 2** to query Apple App Store servers and show dynamic, localized premium pricing in the user's account currency.
 
 ---
 
-## 🏗 Architecture
+## Tech Stack
+
+* **Language**: Swift 5.9+
+* **Framework**: SwiftUI (SwiftUI native App life cycle)
+* **Architecture**: Clean MVVM (Model-View-ViewModel)
+* **Localization**: Native support for 6 languages (Spanish, English, French, German, Italian, and Portuguese).
+* **Framework Dependencies**:
+  * `StoreKit 2` (In-App Purchases)
+  * `GoogleMobileAds` (AdMob - Banner & Interstitial ads)
+  * `UIKit / AudioToolbox` (Haptic feedback engine & split-flap sound playback)
+
+---
+
+## Architecture
 
 TickerTape follows a clean **MVVM** pattern to ensure testability and separation of concerns.
 
@@ -65,44 +74,6 @@ TickerTape follows a clean **MVVM** pattern to ensure testability and separation
 
 ---
 
-## 📂 Project Structure
-
-```
-TickerTape/
-├── App/
-│   ├── TickerTapeApp.swift      # Entry point, Global Appearance config
-│   └── Info.plist               # Config & AdMob IDs
-├── UI/
-│   ├── Screens/
-│   │   ├── ContentView.swift    # Main Tab View wrapper
-│   │   ├── AddCurrencyView.swift# Search & Selection screen
-│   │   └── SettingsView.swift   # Configuration & IAP
-│   ├── Components/
-│   │   ├── CurrencyRowView.swift# Individual list item (Drag & Drop)
-│   │   ├── InputSheetView.swift # Custom Numeric Keypad
-│   │   ├── AdBannerView.swift   # AdMob Bridge
-│   │   └── MatrixBackground.swift # Custom drawing background
-│   └── Visuals/
-│       └── Color+Extension.swift
-├── ViewModel/
-│   ├── CurrencyViewModel.swift  # Core logic engine
-│   ├── SettingsManager.swift    # App preferences
-│   └── ThemeManager.swift       # Dark/Light mode logic
-├── Model/
-│   ├── CurrencyModel.swift      # Data structures
-│   └── CurrencyHelpers.swift    # Formatters & Static Data
-├── Service/
-│   ├── ApiService.swift         # Networking (Fiat + Crypto)
-│   ├── StoreManager.swift       # StoreKit 2 Logic
-│   └── InterstitialManager.swift# AdMob Logic
-└── Resources/
-    ├── Assets.xcassets          # Flags & Icons
-    ├── Fonts/                   # VT323-Regular.ttf
-    └── Localization/            # .strings files (en, es, de, etc.)
-```
-
----
-
-## 📄 License
+## License
 
 This project is licensed under the MIT License
